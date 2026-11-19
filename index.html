@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Soñar Despierto · Finanzas</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#ffffff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Soñar Despierto">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.json">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+         padding: 32px 24px; font-family: -apple-system, system-ui, "Segoe UI", Roboto, sans-serif; color: #141414; background: #fff; text-align: center; }
+  img { width: 160px; margin-bottom: 18px; }
+  h1 { font-size: 26px; margin: 0 0 6px; }
+  p { font-size: 16px; line-height: 1.45; color: #4a4540; margin: 0 0 24px; max-width: 340px; }
+  a.btn { display: block; width: 100%; max-width: 340px; padding: 16px; border-radius: 14px; background: #E83C39; color: #fff;
+          font-size: 18px; font-weight: 700; text-decoration: none; }
+  .tip { margin-top: 26px; max-width: 340px; background: #F5F3F0; border-radius: 14px; padding: 14px 16px; font-size: 14.5px; line-height: 1.45; text-align: left; }
+  .stripe { position: fixed; left: 0; right: 0; bottom: 0; height: 10px; background: linear-gradient(90deg,#E83C39 0 33%,#F28D52 33% 66%,#F7E619 66%); }
+</style>
+</head>
+<body>
+  <img src="icon-512.png" alt="Soñar Despierto">
+  <h1>Finanzas de la posada</h1>
+  <p>Entra con tu nombre y tu PIN.</p>
+  <a class="btn" id="entrar" href="APP_URL">Entrar a la app</a>
+  <div class="tip">📲 <b>Tenla como app:</b> en iPhone toca Compartir → “Agregar a inicio”. En Android, menú ⋮ → “Agregar a pantalla de inicio”.</div>
+  <div class="stripe"></div>
+<script>
+  var APP = "https://script.google.com/macros/s/AKfycbyrYBV61pf8zXUcQBlo9mu2ttdhUD3d4fve-aSU6GX8IrhSAkpRA1-CVK6Hdu5fkIxQ/exec";
+  document.getElementById('entrar').href = APP;
+  // Abierta desde el ícono de la pantalla de inicio: entra directo a la app.
+  var desdeIcono = window.navigator.standalone === true ||
+                   (window.matchMedia && matchMedia('(display-mode: standalone)').matches) ||
+                   /[?&]go=1/.test(location.search);
+  if (desdeIcono) location.replace(APP);
+</script>
+</body>
+</html>
