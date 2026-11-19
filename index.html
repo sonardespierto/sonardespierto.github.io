@@ -16,34 +16,113 @@
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
 <link rel="manifest" href="manifest.json">
+<script>
+  // Abierta desde el ícono de la pantalla de inicio: entra directo a la app.
+  var APP = "https://script.google.com/macros/s/AKfycbyrYBV61pf8zXUcQBlo9mu2ttdhUD3d4fve-aSU6GX8IrhSAkpRA1-CVK6Hdu5fkIxQ/exec";
+  if (window.navigator.standalone === true ||
+      (window.matchMedia && matchMedia('(display-mode: standalone)').matches) ||
+      /[?&]go=1/.test(location.search)) { location.replace(APP); }
+</script>
 <style>
   * { box-sizing: border-box; }
-  body { margin: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
-         padding: 32px 24px; font-family: -apple-system, system-ui, "Segoe UI", Roboto, sans-serif; color: #141414; background: #fff; text-align: center; }
-  img { width: 160px; margin-bottom: 18px; }
-  h1 { font-size: 26px; margin: 0 0 6px; }
-  p { font-size: 16px; line-height: 1.45; color: #4a4540; margin: 0 0 24px; max-width: 340px; }
-  a.btn { display: block; width: 100%; max-width: 340px; padding: 16px; border-radius: 14px; background: #E83C39; color: #fff;
-          font-size: 18px; font-weight: 700; text-decoration: none; }
-  .tip { margin-top: 26px; max-width: 340px; background: #F5F3F0; border-radius: 14px; padding: 14px 16px; font-size: 14.5px; line-height: 1.45; text-align: left; }
-  .stripe { position: fixed; left: 0; right: 0; bottom: 0; height: 10px; background: linear-gradient(90deg,#E83C39 0 33%,#F28D52 33% 66%,#F7E619 66%); }
+  body { margin: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center;
+         padding: 28px 20px 40px; font-family: -apple-system, system-ui, "Segoe UI", Roboto, sans-serif;
+         color: #141414; background: #fff; text-align: center; }
+  .wrap { width: 100%; max-width: 380px; }
+  .logo { width: 128px; margin: 0 auto 10px; display: block; }
+  h1 { font-size: 24px; margin: 0 0 4px; }
+  .sub { font-size: 15px; color: #4a4540; margin: 0 0 22px; }
+  .step { text-align: left; border-radius: 18px; padding: 16px 16px 18px; margin-bottom: 14px; }
+  .step.one { background: #FFF5C2; border: 2px solid #F7E619; }
+  .step.two { background: #F5F3F0; }
+  .head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .n { flex: none; width: 30px; height: 30px; border-radius: 50%; background: #E83C39; color: #fff;
+       font-weight: 800; display: grid; place-items: center; font-size: 16px; }
+  .head b { font-size: 17px; }
+  ol { margin: 0; padding-left: 22px; font-size: 15.5px; line-height: 1.5; }
+  ol li { margin-bottom: 6px; }
+  .ico { display: inline-flex; vertical-align: -5px; width: 22px; height: 22px; border: 1.5px solid #141414;
+         border-radius: 6px; align-items: center; justify-content: center; background: #fff; }
+  .ico svg { width: 15px; height: 15px; }
+  .note { font-size: 13.5px; color: #6B655E; margin: 10px 0 0; line-height: 1.4; }
+  .warn { font-size: 13.5px; color: #8A6D00; margin: 10px 0 0; line-height: 1.4; }
+  a.btn, button.btn { display: block; width: 100%; padding: 15px; border-radius: 14px; border: 0; background: #E83C39;
+          color: #fff; font-size: 17px; font-weight: 700; text-decoration: none; text-align: center; font-family: inherit; cursor: pointer; }
+  button.btn.install { background: #141414; margin-top: 12px; }
+  [hidden] { display: none !important; }
+  .stripe { position: fixed; left: 0; right: 0; bottom: 0; height: 8px;
+            background: linear-gradient(90deg,#E83C39 0 33%,#F28D52 33% 66%,#F7E619 66%); }
 </style>
 </head>
 <body>
-  <img src="icon-512.png" alt="Soñar Despierto">
+<div class="wrap">
+  <img class="logo" src="icon-512.png" alt="Soñar Despierto">
   <h1>Finanzas de la posada</h1>
-  <p>Entra con tu nombre y tu PIN.</p>
-  <a class="btn" id="entrar" href="APP_URL">Entrar a la app</a>
-  <div class="tip">📲 <b>Tenla como app:</b> en iPhone toca Compartir → “Agregar a inicio”. En Android, menú ⋮ → “Agregar a pantalla de inicio”.</div>
-  <div class="stripe"></div>
+  <p class="sub">Entra con tu nombre y tu PIN.</p>
+
+  <section class="step one" id="paso1" hidden>
+    <div class="head"><span class="n">1</span><b>Primero agrégala a tu inicio</b></div>
+
+    <div id="ios" hidden>
+      <ol>
+        <li>Toca <b>Compartir</b> <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#141414" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M8 7l4-4 4 4"/><path d="M6 11H5v10h14V11h-1"/></svg></span> (abajo o arriba de la pantalla).</li>
+        <li>Desliza y toca <b>“Agregar a inicio”</b>.</li>
+        <li>Toca <b>Agregar</b>. Te queda el ícono con el logo.</li>
+      </ol>
+    </div>
+
+    <div id="iosinapp" hidden>
+      <ol>
+        <li>Estás dentro de otra app. Toca <b>⋯</b> o <b>Compartir</b> y elige <b>“Abrir en Safari”</b>.</li>
+        <li>Ya en Safari, toca <b>Compartir</b> <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#141414" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M8 7l4-4 4 4"/><path d="M6 11H5v10h14V11h-1"/></svg></span> → <b>“Agregar a inicio”</b>.</li>
+      </ol>
+    </div>
+
+    <div id="android" hidden>
+      <ol id="andsteps">
+        <li>Toca el menú <b>⋮</b> del navegador (en Samsung Internet es <b>☰</b>).</li>
+        <li>Elige <b>“Agregar a pantalla de inicio”</b> o <b>“Instalar app”</b>.</li>
+        <li>Confirma con <b>Agregar</b>. Te queda el ícono con el logo.</li>
+      </ol>
+      <button class="btn install" id="instalar" hidden>Agregar a mi pantalla de inicio</button>
+    </div>
+
+    <p class="warn">⚠️ Hazlo <b>aquí, antes de entrar</b>. Si lo agregas ya dentro de la app, saldrá una letra en vez del logo.</p>
+  </section>
+
+  <section class="step two">
+    <div class="head"><span class="n" id="n2">2</span><b>Entra a la app</b></div>
+    <a class="btn" id="entrar" href="#">Entrar a la app</a>
+    <p class="note" id="nota2" hidden>Si ya la agregaste, la próxima vez ábrela desde el ícono con el logo.</p>
+  </section>
+</div>
+<div class="stripe"></div>
 <script>
-  var APP = "https://script.google.com/macros/s/AKfycbyrYBV61pf8zXUcQBlo9mu2ttdhUD3d4fve-aSU6GX8IrhSAkpRA1-CVK6Hdu5fkIxQ/exec";
   document.getElementById('entrar').href = APP;
-  // Abierta desde el ícono de la pantalla de inicio: entra directo a la app.
-  var desdeIcono = window.navigator.standalone === true ||
-                   (window.matchMedia && matchMedia('(display-mode: standalone)').matches) ||
-                   /[?&]go=1/.test(location.search);
-  if (desdeIcono) location.replace(APP);
+  var ua = navigator.userAgent || "";
+  var esIOS = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  var esAndroid = /Android/.test(ua);
+  var enOtraApp = /FBAN|FBAV|Instagram|Line\/|GSA\/|Snapchat|TikTok|musical_ly/.test(ua);
+  function ver(id){ document.getElementById(id).hidden = false; }
+  if (esIOS || esAndroid) {
+    ver('paso1'); ver('nota2');
+    if (esIOS) ver(enOtraApp ? 'iosinapp' : 'ios');
+    else ver('android');
+  } else {
+    // Computadora: no hace falta el paso de instalar.
+    document.getElementById('n2').textContent = '→';
+  }
+  // Android (Chrome, Edge, Samsung): botón directo para instalar cuando el navegador lo permite.
+  var aviso = null;
+  window.addEventListener('beforeinstallprompt', function (e) {
+    e.preventDefault(); aviso = e;
+    if (esAndroid) ver('instalar');
+  });
+  document.getElementById('instalar').addEventListener('click', function () {
+    if (!aviso) return;
+    aviso.prompt();
+    aviso.userChoice.then(function () { aviso = null; document.getElementById('instalar').hidden = true; });
+  });
 </script>
 </body>
 </html>
